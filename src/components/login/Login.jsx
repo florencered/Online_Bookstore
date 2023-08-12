@@ -2,22 +2,60 @@ import React from 'react'
 import "./login.css"; 
 import { useState } from 'react'; 
 import {  createUserWithEmailAndPassword ,signInWithEmailAndPassword} from "firebase/auth"; 
-import { auth, signInWithGoogle,signInWithGithub} from "../../FirebaseConfig";
-
-
-const Login = () => {   
-	
-// 	const [register,useRegister]=useState(false); 
-// 	//Signin 
-// 	const SignIn=()=>{
-// 		useRegister(!register);  
-
-		
-// 	}  
-//email and password 
+import { auth,provider,providerGit} from "../../FirebaseConfig"; 
+import { signInWithPopup } from "firebase/auth";
+import Cookies from 'universal-cookie';
+//declare the coookie for using it 
+const cookies=new Cookies();
+const Login = ({setIsAuth}) => {   
 const [email,setEmail] =useState("");
 const [password,setPassword]=useState("");
-
+const signInWithGoogle = () => {
+	signInWithPopup(auth, provider)
+	  .then((result) => { 
+		cookies.set("auth-token",result.user.refreshToken); 
+		console.log(result.user.refreshToken);
+		const name = result.user.displayName;
+		const email = result.user.email; 
+		alert("signed in with google successfully")
+		setIsAuth(true);
+		
+		
+	  })
+	  .catch((error) => { 
+  
+		console.log(error); 
+		alert(error);
+		
+	  });
+  }; 
+ const signInWithGithub=()=>{
+	signInWithPopup(auth, providerGit)
+	.then((result) => { 
+	  // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+	  
+	  cookies.set("auth-token",result.user.refreshToken);
+  
+	  // The signed-in user info.
+	  const user = result.user; 
+	  console.log("github user",user);
+	  // IdP data available using getAdditionalUserInfo(result)
+	  // ... 
+	  alert("you have been signed in successfully"); 
+	  setIsAuth(true);
+	}).catch((error) => {
+	  // Handle Errors here.
+	  const errorCode = error.code;
+	  const errorMessage = error.message;
+	  // The email of the user's account used.
+	  const email = error.customData.email;
+	  // The AuthCredential type that was used.
+	  
+	  alert(errorMessage);
+	}); 
+  
+  }
+  
 const signUp= ()=>{      
 	
 	console.log("entered");
@@ -25,8 +63,10 @@ const signUp= ()=>{
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user); 
+    console.log(user.accessToken); 
+	cookies.set("auth-token",user.accessToken); 
 	alert("Created account successfully");
+	setIsAuth(true);
   })
   .catch((error) => {
     const errorMessage = error.message; 
@@ -40,8 +80,10 @@ const loginUser=()=>{
 signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
-    const user = userCredential.user;
-    console.log(user); 
+    const user = userCredential.user; 
+	console.log(user.accessToken);
+	cookies.set("auth-token",user.accessToken);
+	setIsAuth(true);
 	alert("logged in successfully");
   })
   .catch((error) => {
