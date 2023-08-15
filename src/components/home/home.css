@@ -1,9 +1,18 @@
 .input {
     font-family: 'Segoe UI', sans-serif;
     margin: 1em 0 1em 0;
-    max-width: 190px;
-    position: relative;
-  }
+    /* position: relative;  */ 
+   font-size: 18px;
+    margin-left: auto; 
+    margin-right: 50rem; 
+    margin-top: 5rem;
+    width: 500px; 
+
+  }  
+
+h1{
+  font-family: 'Segoe UI', sans-serif;
+}
   
   .input input {
     font-size: 100%;
@@ -12,19 +21,11 @@
     border: 5px solid rgb(4, 58, 176);
     background-color: transparent;
     border-radius: 20px;
-    width: 100%;
+    width:50vw; 
+    
   }
   
-  .input label {
-    font-size: 100%;
-    position: absolute;
-    left: 0;
-    padding: 0.8em;
-    margin-left: 0.5em;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    color: black;
-  }
+  
   
   .input :is(input:focus, input:valid)~label {
     transform: translateY(-50%) scale(.9);
@@ -33,7 +34,7 @@
     padding: 0.4em;
     background-color: white;
   } 
-  button { 
+  .styled { 
     cursor: pointer;
     --color: rgb(4, 58, 176);
     font-family: inherit;
@@ -50,10 +51,11 @@
     font-size: 17px;
     border-radius: 6px;
     font-weight: 500;
-    color: var(--color);
+    color: var(--color); 
+    
    }
    
-   button:before {
+   .styled:before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -63,22 +65,22 @@
     border-radius: 50%;
    }
    
-   button:hover {
+   .styled:hover {
     color: #fff;
    }
    
-   button:before {
+   .styled:before {
     top: 100%;
     left: 100%;
     transition: all .7s;
    }
    
-   button:hover:before {
+   .styled:hover:before {
     top: -30px;
     left: -30px;
    }
    
-   button:active:before {
+   .styled:active:before {
     background: #3a0ca3;
     transition: background 0s;
    }

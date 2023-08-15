@@ -16,7 +16,7 @@ if (!isAuth){
     </div>
   );
 } 
-return <div><Home/></div>
+return <div><Home setIsAuth={setIsAuth}/></div>
   
 }
 
