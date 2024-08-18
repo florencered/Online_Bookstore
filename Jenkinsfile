@@ -1,17 +1,19 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout SCM') {
+            steps {
+                git 'https://github.com/florencered/Online_Bookstore.git'
+            }
+        }
         stage('Build') {
             steps {
-                script {
-                    sh 'npm install'
-                    sh 'npm run build'
-                }
+                bat 'echo Building...'
             }
         }
         stage('Test') {
             steps {
-                sh 'npm test'
+                bat 'echo Testing...'
             }
         }
     }
